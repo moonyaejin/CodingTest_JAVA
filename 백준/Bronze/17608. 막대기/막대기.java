@@ -12,14 +12,16 @@ public class Main {
             heights[i] = Integer.parseInt(br.readLine());
         }
 
-        Stack<Integer> stack = new Stack<>();
+        int count = 0;
+        int maxHeight = 0;
 
         for (int i = heights.length - 1; i >= 0; i--) {
-            if (stack.isEmpty() || heights[i] > stack.peek()) {  //맨 위(top)의 값을 꺼내 확인만 하고 제거하지 않음
-                stack.push(heights[i]);
+            if (heights[i] > maxHeight) {
+                maxHeight = heights[i];
+                count++;
             }
         }
 
-        System.out.println(stack.size());
+        System.out.println(count);
     }
 }
