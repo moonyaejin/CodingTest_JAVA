@@ -2,24 +2,19 @@ class Solution {
     public int solution(int[] schedules, int[][] timelogs, int startday) {
         int n = schedules.length;
         int count = 0;
-
-        // startday를 0~6으로 변환 (0=월, 5=토, 6=일)
-        int dayStart = (startday - 1) % 7;
+        int dayStart = startday - 1; // 0~6 범위로 변환
 
         for (int i = 0; i < n; i++) {
             int limit = toMinutes(schedules[i]) + 10;
-            boolean ok = true;
-
-            for (int j = 0; j < 7; j++) {
+            
+            int j;
+            for (j = 0; j < 7; j++) {
                 int day = (dayStart + j) % 7;
-                if (day >= 5) continue; // 5=토, 6=일
-
-                if (toMinutes(timelogs[i][j]) > limit) {
-                    ok = false;
-                    break;
-                }
+                if (day >= 5) continue; // 토, 일 제외
+                if (toMinutes(timelogs[i][j]) > limit) break; // 지각이면 탈락
             }
-            if (ok) count++;
+
+            if (j == 7 || (dayStart + j) % 7 >= 5) count++; 
         }
 
         return count;
